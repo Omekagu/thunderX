@@ -1,4 +1,5 @@
-import { FaBars, FaPlus } from 'react-icons/fa'
+import { FaBars, FaSearch } from 'react-icons/fa'
+import { RiDownload2Line, RiUpload2Line } from 'react-icons/ri'
 
 export const Dashboard = () => (
   <div className='dashboard-container'>
@@ -8,7 +9,7 @@ export const Dashboard = () => (
       </div>
       <div className='header-actions'>
         <button className='icon-btn' aria-label='Search'>
-          <i className='icon-search' />
+          <FaSearch />
         </button>
         <button className='icon-btn' aria-label='Menu'>
           <FaBars />
@@ -16,71 +17,38 @@ export const Dashboard = () => (
       </div>
     </header>
 
-    <div className='dashboard-content'>
-      <h2 className='dashboard-title'>Dashboard</h2>
-      <p className='dashboard-subtitle'>
-        Happy to see you again. Get update of your asset today!
-      </p>
-      <div className='dashboard-actions'>
-        <button className='circle-btn'>
-          <FaPlus />
-        </button>
-        <div className='dropdown'>
-          <button className='dropdown-btn'>
-            <i className='icon-calendar' />
-            <span>All Time</span>
-            <i className='icon-caret-down' />
-          </button>
+    {/* TOP CARD from Image 2 */}
+    <section className='top-card'>
+      <div className='top-card-header'>
+        <img
+          src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg'
+          alt='Profile'
+          className='profile-img'
+        />
+        <div className='greeting-area'>
+          <span className='greeting'>Good Morning</span>
+          <span className='user-name'>Hi, Omekagu Joseph</span>
         </div>
-        <button className='buy-btn'>INVESTMENT PLANS</button>
       </div>
-      <section className='assets-card'>
-        <div className='assets-header'>
-          <span>
-            Total Investments <i className='icon-info' />
-          </span>
-        </div>
-        <div className='assets-value'>
-          <span className='amount'>$325,980.65</span>
-        </div>
-        <div className='assets-growth'>
-          <span className='growth-positive'>
-            <i className='icon-arrow-up' /> +12%
-          </span>
-          <span className='growth-amount'>+$39,117.67 in this year</span>
-        </div>
-        <div className='assets-distribution'>
-          <span className='distribution-title'>Distribution</span>
-          <div className='distribution-bar'>
-            <div className='bar-segment stocks' style={{ width: '65%' }}></div>
-            <div className='bar-segment bonds' style={{ width: '25%' }}></div>
-            <div
-              className='bar-segment mutual-funds'
-              style={{ width: '10%' }}
-            ></div>
-          </div>
-          <div className='distribution-list'>
-            <div className='distribution-item'>
-              <span className='dot stocks'></span>
-              <span className='name'>Stocks</span>
-              <span className='percent'>65%</span>
-              <span className='amount'>$211,887.42</span>
-            </div>
-            <div className='distribution-item'>
-              <span className='dot bonds'></span>
-              <span className='name'>Bonds</span>
-              <span className='percent'>25%</span>
-              <span className='amount'>$81,495.16</span>
-            </div>
-            <div className='distribution-item'>
-              <span className='dot mutual-funds'></span>
-              <span className='name'>Mutual Funds</span>
-              <span className='percent'>10%</span>
-              <span className='amount'>$32,598.06</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      <hr className='divider' />
+      <div className='spending-row'>
+        <span className='spending-label'>June Spending</span>
+        <button className='see-all-btn'>See all</button>
+      </div>
+      <div className='spending-amount'>$1050.99</div>
+      <div className='actions-row'>
+        <button className='action-btn'>
+          <RiDownload2Line className='action-icon' />
+          Deposit
+        </button>
+        <span className='action-divider' />
+        <button className='action-btn'>
+          <RiUpload2Line className='action-icon' />
+          Withdraw
+        </button>
+      </div>
+    </section>
+
+    {/* Investment Chart Placeholder */}
   </div>
 )
