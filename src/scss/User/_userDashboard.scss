@@ -1,5 +1,5 @@
 .dashboard-container {
-  background: #14121c;
+  background: #5b5089;
   min-height: 100vh;
   font-family: 'Inter', Arial, sans-serif;
   color: #fff;
@@ -44,201 +44,6 @@
       cursor: pointer;
       font-size: 1.2rem;
     }
-  }
-}
-
-// .dashboard-content {
-//   padding: 20px 20px 0 20px;
-
-//   .dashboard-title {
-//     font-size: 1.5rem;
-//     font-weight: 700;
-//     margin-bottom: 4px;
-//   }
-//   .dashboard-subtitle {
-//     font-size: 1rem;
-//     color: #b3b3b3;
-//     margin-bottom: 18px;
-//     line-height: 1.4;
-//   }
-
-//   .dashboard-actions {
-//     display: flex;
-//     align-items: center;
-//     gap: 12px;
-//     margin-bottom: 24px;
-
-//     .circle-btn {
-//       background: #232038;
-//       border: none;
-//       border-radius: 12px;
-//       width: 40px;
-//       height: 40px;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       color: #fff;
-//       font-size: 1.2rem;
-//       cursor: pointer;
-//     }
-
-//     .dropdown {
-//       .dropdown-btn {
-//         background: #232038;
-//         border: none;
-//         border-radius: 10px;
-//         padding: 0 16px;
-//         height: 40px;
-//         color: #fff;
-//         display: flex;
-//         align-items: center;
-//         gap: 8px;
-//         font-size: 0.8rem;
-//         cursor: pointer;
-//       }
-//     }
-
-//     .buy-btn {
-//       background: #7a5fff;
-//       border: none;
-//       border-radius: 10px;
-//       height: 40px;
-//       padding: 0 20px;
-//       color: #fff;
-//       font-weight: 500;
-//       font-size: 0.7rem;
-//       cursor: pointer;
-//       transition: background 0.2s;
-//       &:hover {
-//         background: #5a39e0;
-//       }
-//     }
-//   }
-
-//   .assets-card {
-//     background: #7a5fff;
-//     border-radius: 20px;
-//     padding: 24px 20px;
-//     color: #fff;
-//     margin-top: 8px;
-//     box-shadow: 0 8px 32px rgba(122, 95, 255, 0.15);
-
-//     .assets-header {
-//       font-size: 1.05rem;
-//       font-weight: 600;
-//       margin-bottom: 6px;
-//       display: flex;
-//       align-items: center;
-//       gap: 6px;
-//       opacity: 0.8;
-//     }
-//     .assets-value {
-//       font-size: 2rem;
-//       font-weight: 700;
-//       margin-bottom: 6px;
-//       .amount {
-//         font-size: 2rem;
-//       }
-//     }
-//     .assets-growth {
-//       display: flex;
-//       align-items: center;
-//       gap: 10px;
-//       margin-bottom: 18px;
-//       .growth-positive {
-//         background: #3cd278;
-//         color: #fff;
-//         border-radius: 8px;
-//         padding: 2px 8px;
-//         font-size: 0.9rem;
-//         display: flex;
-//         align-items: center;
-//         gap: 3px;
-//       }
-//       .growth-amount {
-//         font-size: 0.95rem;
-//         opacity: 0.9;
-//       }
-//     }
-//     .assets-distribution {
-//       .distribution-title {
-//         font-size: 1.03rem;
-//         font-weight: 600;
-//         margin-bottom: 10px;
-//         display: block;
-//       }
-//       .distribution-bar {
-//         display: flex;
-//         height: 8px;
-//         background: #9e90fe;
-//         border-radius: 8px;
-//         overflow: hidden;
-//         margin-bottom: 18px;
-//         .bar-segment {
-//           height: 100%;
-//           &.stocks {
-//             background: #fff;
-//           }
-//           &.bonds {
-//             background: #c6bbff;
-//           }
-//           &.mutual-funds {
-//             background: #d1c6ff;
-//           }
-//         }
-//       }
-//       .distribution-list {
-//         .distribution-item {
-//           display: flex;
-//           align-items: center;
-//           justify-content: space-between;
-//           padding: 7px 0;
-//           font-size: 1rem;
-//           .dot {
-//             width: 10px;
-//             height: 10px;
-//             border-radius: 50%;
-//             margin-right: 8px;
-//             &.stocks {
-//               background: #fff;
-//             }
-//             &.bonds {
-//               background: #c6bbff;
-//             }
-//             &.mutual-funds {
-//               background: #d1c6ff;
-//             }
-//           }
-//           .name {
-//             margin-right: auto;
-//             margin-left: 4px;
-//           }
-//           .percent {
-//             margin-left: 10px;
-//             color: #f3ebff;
-//             opacity: 0.82;
-//           }
-//           .amount {
-//             font-weight: 500;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
-/* Responsive design */
-@media (min-width: 600px) {
-  .dashboard-container {
-    max-width: 480px;
-    margin: 0 auto;
-    border-radius: 24px;
-    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.12);
-  }
-}
-@media (min-width: 900px) {
-  .dashboard-container {
-    max-width: 420px;
   }
 }
 .top-card {
@@ -286,7 +91,7 @@
       font-size: 1.3rem;
       cursor: pointer;
       padding: 6px;
-      border-radius: 7px;
+      border-radius: 1px;
       transition: background 0.16s;
       &:hover {
         background: #272727;
@@ -305,9 +110,9 @@
     align-items: center;
     justify-content: space-between;
     .spending-label {
-      font-size: 0.99rem;
+      font-size: 1rem;
       color: #bdbdbd;
-      font-weight: 500;
+      font-weight: 900;
     }
     .see-all-btn {
       background: none;
@@ -329,9 +134,9 @@
   }
 
   .spending-amount {
-    color: #47fd65;
-    font-size: 2.05rem;
-    font-weight: 800;
+    color: #0bfc33;
+    font-size: 2rem;
+    font-weight: 900;
     letter-spacing: 1.2px;
     margin: 4px 0 14px 0;
   }
@@ -394,5 +199,20 @@
         }
       }
     }
+  }
+}
+
+/* Responsive design */
+@media (min-width: 600px) {
+  .dashboard-container {
+    max-width: 480px;
+    margin: 0 auto;
+    // border-radius: 24px;
+    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+@media (min-width: 900px) {
+  .dashboard-container {
+    max-width: 420px;
   }
 }

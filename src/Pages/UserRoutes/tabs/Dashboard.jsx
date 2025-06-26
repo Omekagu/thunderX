@@ -32,8 +32,7 @@ export const Dashboard = () => (
       </div>
       <hr className='divider' />
       <div className='spending-row'>
-        <span className='spending-label'>June Spending</span>
-        <button className='see-all-btn'>See all</button>
+        <span className='spending-label'>Wallet balance</span>
       </div>
       <div className='spending-amount'>$1050.99</div>
       <div className='actions-row'>
