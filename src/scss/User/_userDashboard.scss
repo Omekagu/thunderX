@@ -3,7 +3,7 @@
   min-height: 100vh;
   font-family: 'Inter', Arial, sans-serif;
   color: #fff;
-  padding: 20px;
+  padding: 0;
 }
 
 .dashboard-header {
@@ -11,8 +11,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 20px 0 20px;
-  // position: fixed;
-  // height: 200px;
 
   .logo-section {
     display: flex;
