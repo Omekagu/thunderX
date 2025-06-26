@@ -29,7 +29,7 @@ import ActiveUsers from './Pages/adminroutes/manage-users/ActiveUsers'
 import Analytics from './Pages/adminroutes/dashboard/Analytics'
 import DashBoard from './Pages/adminroutes/DashBoard'
 import Bookings from './Pages/adminroutes//manage-users/Bookings'
-import { Dashboard } from './Pages/UserRoutes/tabs/Dashboard'
+import { UserDashboard } from './Pages/UserRoutes/tabs/UserDashboard'
 
 function App () {
   return (
@@ -37,9 +37,9 @@ function App () {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route element={<PrivateRoute />}>
-          <Route path='admin/dashboard' element={<DashBoard />} />
+          <Route path='/admin/dashboard' element={<DashBoard />} />
         </Route>
-        <Route path='user/dashboard' element={<Dashboard />} />
+        <Route path='/user/dashboard' element={<UserDashboard />} />
         <Route path='/dashboard/analytics' element={<Analytics />} />
         <Route exact path='/Reservations' element={<Reservations />} />
         <Route exact path='/manage-rooms' element={<ManageRooms />} />

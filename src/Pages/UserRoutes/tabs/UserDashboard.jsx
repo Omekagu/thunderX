@@ -2,7 +2,7 @@ import { FaBars, FaSearch } from 'react-icons/fa'
 import { UserAmount } from '../../../Components/User/UserAmount'
 import InvestmentHistory from '../../../Components/User/InvestmentHistory'
 
-export const Dashboard = () => (
+export const UserDashboard = () => (
   <div className='dashboard-container'>
     <header className='dashboard-header'>
       <div className='logo-section'>
