@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   FaBars,
   FaSearch,
@@ -10,7 +10,23 @@ import {
 } from 'react-icons/fa'
 
 export default function MainHeader () {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  // Detect mobile view
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 600)
+  const [drawerOpen, setDrawerOpen] = useState(() => window.innerWidth <= 600)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 600
+      setIsMobile(mobile)
+      if (mobile) {
+        setDrawerOpen(true)
+      } else {
+        setDrawerOpen(false)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <div>
@@ -22,29 +38,33 @@ export default function MainHeader () {
           <button className='icon-btn' aria-label='Search'>
             <FaSearch />
           </button>
-          <button
-            className='icon-btn'
-            aria-label='Menu'
-            onClick={() => setDrawerOpen(true)}
-          >
-            <FaBars />
-          </button>
+          {!isMobile && (
+            <button
+              className='icon-btn'
+              aria-label='Menu'
+              onClick={() => setDrawerOpen(true)}
+            >
+              <FaBars />
+            </button>
+          )}
         </div>
       </header>
 
-      {/* Drawer Overlay */}
-      {drawerOpen && (
+      {/* Drawer Overlay (desktop only) */}
+      {drawerOpen && !isMobile && (
         <div className='drawer-overlay' onClick={() => setDrawerOpen(false)} />
       )}
 
       {/* Drawer Sidebar */}
       <nav className={`drawer ${drawerOpen ? 'open' : ''}`}>
-        <button
-          className='drawer-close-btn'
-          onClick={() => setDrawerOpen(false)}
-        >
-          <FaTimes />
-        </button>
+        {!isMobile && (
+          <button
+            className='drawer-close-btn'
+            onClick={() => setDrawerOpen(false)}
+          >
+            <FaTimes />
+          </button>
+        )}
         <ul className='drawer-list'>
           <li>
             <FaHome className='drawer-icon' /> <span>Dashboard</span>
@@ -82,7 +102,6 @@ export default function MainHeader () {
           <li>
             <FaChartLine className='drawer-icon' /> <span>Card</span>
           </li>
-
           <li>
             <FaSignOutAlt className='drawer-icon' /> <span>Logout</span>
           </li>
