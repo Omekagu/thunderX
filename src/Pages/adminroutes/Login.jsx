@@ -15,7 +15,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      navigate('/admin/dashboard')
+      navigate('/user/dashboard')
     }
   }, [navigate])
 
@@ -37,7 +37,7 @@ const Login = () => {
       const token = res.data.token
       localStorage.setItem('token', token)
       toast.success('Login successful!', { position: 'top-right' })
-      navigate('/admin/dashboard') // Redirect after login
+      navigate('/user/dashboard') // Redirect after login
     } catch (err) {
       console.error('Login Error:', err)
 

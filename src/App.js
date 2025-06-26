@@ -38,8 +38,8 @@ function App () {
         <Route path='/' element={<Login />} />
         <Route element={<PrivateRoute />}>
           <Route path='/admin/dashboard' element={<DashBoard />} />
+          <Route path='/user/dashboard' element={<UserDashboard />} />
         </Route>
-        <Route path='/user/dashboard' element={<UserDashboard />} />
         <Route path='/dashboard/analytics' element={<Analytics />} />
         <Route exact path='/Reservations' element={<Reservations />} />
         <Route exact path='/manage-rooms' element={<ManageRooms />} />
