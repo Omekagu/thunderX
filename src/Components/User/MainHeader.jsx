@@ -6,7 +6,6 @@ import {
   FaHome,
   FaUser,
   FaChartLine,
-  FaMoneyBillWave,
   FaSignOutAlt
 } from 'react-icons/fa'
 
@@ -54,12 +53,36 @@ export default function MainHeader () {
             <FaUser className='drawer-icon' /> <span>Profile</span>
           </li>
           <li>
-            <FaChartLine className='drawer-icon' /> <span>Analytics</span>
+            <FaChartLine className='drawer-icon' /> <span>Referral</span>
           </li>
           <li>
-            <FaMoneyBillWave className='drawer-icon' />{' '}
-            <span>Transactions</span>
+            <FaChartLine className='drawer-icon' /> <span>Deposit</span>
           </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>withdrawal</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>Transfer</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>Invesment plan</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>Card</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>History</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>KYC</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>Password</span>
+          </li>
+          <li>
+            <FaChartLine className='drawer-icon' /> <span>Card</span>
+          </li>
+
           <li>
             <FaSignOutAlt className='drawer-icon' /> <span>Logout</span>
           </li>
