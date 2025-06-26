@@ -19,9 +19,9 @@ export default function MainHeader () {
       const mobile = window.innerWidth <= 600
       setIsMobile(mobile)
       if (mobile) {
-        setDrawerOpen(true)
-      } else {
         setDrawerOpen(false)
+      } else {
+        setDrawerOpen(true)
       }
     }
     window.addEventListener('resize', handleResize)
