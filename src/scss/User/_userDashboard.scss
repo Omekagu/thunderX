@@ -1,9 +1,11 @@
 .dashboard-container {
-  background: #5b5089;
+  align-self: center;
+  background: linear-gradient(135deg, #5b5089 0%, #181818 100%);
   min-height: 100vh;
   font-family: 'Inter', Arial, sans-serif;
   color: #fff;
   padding: 0;
+  transition: background 0.3s;
 }
 
 .dashboard-header {
@@ -25,6 +27,8 @@
       font-size: 1rem;
       letter-spacing: 1px;
       text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 2px 8px #22176885;
     }
   }
 
@@ -131,6 +135,7 @@
     padding: 16px 13px 0 13px;
   }
 }
+
 .top-card {
   background: #181818;
   border-radius: 22px;
@@ -269,11 +274,269 @@
   }
 }
 
-/* Add responsive styling for .top-card if needed */
+/* Investment Card / Asset Card Consistency */
+.assets-card {
+  background: #7a5fff;
+  border-radius: 18px;
+  padding: 22px 18px;
+  color: #fff;
+  margin: 20px;
+  box-shadow: 0 8px 32px rgba(122, 95, 255, 0.15);
+
+  .assets-header {
+    font-size: 1.07rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.88;
+  }
+  .assets-value {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    .amount {
+      font-size: 2.1rem;
+    }
+  }
+  .assets-growth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    .growth-positive {
+      background: #3cd278;
+      color: #fff;
+      border-radius: 8px;
+      padding: 2.5px 9px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .growth-amount {
+      font-size: 0.98rem;
+      opacity: 0.92;
+    }
+  }
+  .assets-distribution {
+    .distribution-title {
+      font-size: 1.04rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .distribution-bar {
+      display: flex;
+      height: 8px;
+      background: #9e90fe;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      .bar-segment {
+        height: 100%;
+        &.stocks {
+          background: #fff;
+        }
+        &.bonds {
+          background: #c6bbff;
+        }
+        &.mutual-funds {
+          background: #d1c6ff;
+        }
+      }
+    }
+    .distribution-list {
+      .distribution-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 7px 0;
+        font-size: 1rem;
+        .dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 8px;
+          &.stocks {
+            background: #fff;
+          }
+          &.bonds {
+            background: #c6bbff;
+          }
+          &.mutual-funds {
+            background: #d1c6ff;
+          }
+        }
+        .name {
+          margin-right: auto;
+          margin-left: 4px;
+        }
+        .percent {
+          margin-left: 10px;
+          color: #f3ebff;
+          opacity: 0.83;
+        }
+        .amount {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+/* Investment History Card Styling */
+.investment-history {
+  background: #181818;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px #0002;
+  padding: 18px 16px 10px 16px;
+  margin: 20px;
+  .history-header {
+    font-size: 1.16rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .history-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    background: #232038;
+    border-radius: 12px;
+    padding: 11px 13px;
+    box-shadow: 0 2px 9px #0e021522;
+    transition: background 0.18s;
+    &:hover {
+      background: #2f2860;
+    }
+  }
+  .history-icon {
+    min-width: 40px;
+    min-height: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #b3b3b3;
+    color: #101010;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.34rem;
+    font-weight: 700;
+    margin-top: 2px;
+    box-shadow: 0 1px 6px #0002;
+  }
+  .history-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .history-type {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #fff;
+      text-transform: capitalize;
+      letter-spacing: 0.1px;
+    }
+
+    .history-amount {
+      font-size: 1.08rem;
+      font-weight: 700;
+      &.positive {
+        color: #47fd65;
+      }
+      &.negative {
+        color: #ff637d;
+      }
+    }
+
+    .history-date {
+      font-size: 0.93rem;
+      color: #b3b3b3;
+      font-weight: 400;
+    }
+
+    .history-status {
+      font-size: 0.91rem;
+      font-weight: 600;
+      border-radius: 7px;
+      padding: 2px 8px;
+      &.completed {
+        background: #232;
+        color: #35e465;
+      }
+      &.pending {
+        background: #2f2a12;
+        color: #ffd700;
+      }
+      &.failed {
+        background: #2e1313;
+        color: #ff637d;
+      }
+    }
+
+    .history-desc {
+      margin-top: 2px;
+      font-size: 0.94rem;
+      color: #e5e5e5;
+      opacity: 0.7;
+    }
+  }
+}
+
 @media (max-width: 600px) {
+  .dashboard-container {
+    background: linear-gradient(135deg, #5b5089 60%, #181818 100%);
+  }
+  .top-card,
+  .assets-card,
+  .investment-history {
+    margin: 10px 4px 10px 4px;
+    padding: 13px 7px;
+    border-radius: 16px;
+  }
+  .investment-history {
+    padding: 10px 3px 5px 7px;
+    .history-header {
+      font-size: 1.03rem;
+    }
+    .history-item {
+      padding: 8px 7px;
+      .history-icon {
+        min-width: 33px;
+        min-height: 33px;
+        width: 33px;
+        height: 33px;
+        font-size: 1.05rem;
+      }
+      .history-type,
+      .history-amount {
+        font-size: 0.95rem;
+      }
+      .history-date,
+      .history-status,
+      .history-desc {
+        font-size: 0.87rem;
+      }
+    }
+  }
   .top-card {
-    margin: 10px 0 16px 0;
-    padding: 13px 7px 0 7px;
     .actions-row {
       min-height: 46px;
       height: 46px;
@@ -287,17 +550,15 @@
   }
 }
 
-/* Responsive design */
-@media (min-width: 600px) {
-  .dashboard-container {
-    max-width: 480px;
-    margin: 0 auto;
-    // border-radius: 24px;
-    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.12);
-  }
-}
+/* Laptop/Desktop enhancements */
 @media (min-width: 900px) {
   .dashboard-container {
     max-width: 420px;
+  }
+  .top-card,
+  .assets-card,
+  .investment-history {
+    margin: 24px auto;
+    border-radius: 22px;
   }
 }
