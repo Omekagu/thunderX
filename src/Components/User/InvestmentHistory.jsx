@@ -73,7 +73,7 @@ const typeToColor = {
 
 export const InvestmentHistory = () => (
   <section className='investment-history'>
-    <div className='history-header'>Investment History</div>
+    <div className='history-header'>Transaction History</div>
     <div className='history-list'>
       {dummyHistory.map(item => (
         <div className='history-item' key={item.id}>
