@@ -30,8 +30,10 @@ export const UserAmount = () => {
         </button>
         <span className='action-divider' />
         <button className='action-btn'>
-          <RiUpload2Line className='action-icon' />
-          Withdraw
+          <Link to={'/user/withdrawal'}>
+            <RiUpload2Line className='action-icon' />
+            Withdraw
+          </Link>
         </button>
       </div>
     </section>

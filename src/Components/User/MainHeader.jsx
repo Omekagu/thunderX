@@ -30,7 +30,7 @@ export default function MainHeader () {
     { icon: <FaUser />, label: 'Profile', path: '/profile' },
     { icon: <FaChartLine />, label: 'Referral', path: '/referral' },
     { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
-    { icon: <FaChartLine />, label: 'Withdrawal', path: '/withdrawal' },
+    { icon: <FaChartLine />, label: 'Withdrawal', path: '/user/withdrawal' },
     { icon: <FaChartLine />, label: 'Transfer', path: '/transfer' },
     {
       icon: <FaChartLine />,

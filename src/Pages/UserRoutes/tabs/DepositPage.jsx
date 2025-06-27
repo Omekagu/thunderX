@@ -202,8 +202,19 @@ export default function DepositPage () {
                     )}
                   </div>
                   <div className='info-note'>
-                    Send <strong>${amount}</strong> worth of{' '}
-                    {selectedCrypto.label} to the above address.
+                    Kindly Copy and Send
+                    <br />
+                    <br />
+                    <strong>${amount}</strong>
+                    <br />
+                    <br />
+                    or send an equivalent amount of
+                    <br />
+                    <br />
+                    <strong>0.12334 {selectedCrypto.label}</strong>
+                    <br />
+                    <br />
+                    to the above address.
                   </div>
                 </>
               )}

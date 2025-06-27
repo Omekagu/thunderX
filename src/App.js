@@ -32,6 +32,7 @@ import Bookings from './Pages/adminroutes//manage-users/Bookings'
 import { UserDashboard } from './Pages/UserRoutes/tabs/UserDashboard'
 import InvestmentPlan from './Pages/UserRoutes/tabs/InvestmentPlan'
 import DepositPage from './Pages/UserRoutes/tabs/DepositPage'
+import WithdrawalPage from './Pages/UserRoutes/tabs/WithdrawalPage'
 
 function App () {
   return (
@@ -45,6 +46,7 @@ function App () {
         <Route path='/dashboard/analytics' element={<Analytics />} />
         <Route path='/user/investmentPlans' element={<InvestmentPlan />} />
         <Route path='/user/deposit' element={<DepositPage />} />
+        <Route path='/user/withdrawal' element={<WithdrawalPage />} />
         <Route exact path='/Reservations' element={<Reservations />} />
         <Route exact path='/manage-rooms' element={<ManageRooms />} />
         <Route exact path='/staff-scetion' element={<StaffSection />} />

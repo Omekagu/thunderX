@@ -1,4 +1,4 @@
-.deposit-page {
+.withdrawalPage-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -7,7 +7,7 @@
   padding: 2rem 0;
 }
 
-.deposit-card {
+.withdrawalPage-card {
   background: rgba(24, 27, 44, 0.97);
   border-radius: 20px;
   box-shadow: 0 4px 32px #0004, 0 2px 8px #00d4ff22;
@@ -28,7 +28,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .deposit-description {
+  .withdrawalPage-description {
     color: #b0b8c4;
     margin-bottom: 1.3rem;
     font-weight: 500;
@@ -41,7 +41,7 @@
   }
 }
 
-.deposit-methods {
+.withdrawalPage-methods {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -163,7 +163,7 @@
   }
 }
 
-.deposit-action-btn {
+.withdrawalPage-action-btn {
   margin-top: 1.2rem;
   width: 100%;
   padding: 13px 0;
@@ -198,9 +198,9 @@
   }
 }
 
-.deposit-details {
+.withdrawalPage-details {
   margin-top: 0.8rem;
-  .deposit-summary {
+  .withdrawalPage-summary {
     font-size: 1.07rem;
     font-weight: 700;
     margin-bottom: 1.1rem;
@@ -348,7 +348,7 @@
   }
 }
 
-.deposit-card.loading {
+.withdrawalPage-card.loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -377,7 +377,7 @@
   }
 }
 
-.deposit-card.done {
+.withdrawalPage-card.done {
   text-align: center;
   h2 {
     font-size: 2rem;
@@ -414,12 +414,12 @@
 }
 
 @media (max-width: 650px) {
-  .deposit-card {
+  .withdrawalPage-card {
     min-width: 0;
     width: 97vw;
     padding: 2rem 0.5rem 1.7rem 0.5rem;
   }
-  .deposit-methods {
+  .withdrawalPage-methods {
     flex-direction: column;
     gap: 8px;
   }
