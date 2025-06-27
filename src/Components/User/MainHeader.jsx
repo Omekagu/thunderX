@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import {
   FaBars,
-  FaSearch,
   FaTimes,
   FaHome,
   FaUser,
   FaChartLine,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaExpand
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
@@ -28,7 +28,7 @@ export default function MainHeader () {
   const sidebarLinks = [
     { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
     { icon: <FaUser />, label: 'Profile', path: '/profile' },
-    { icon: <FaChartLine />, label: 'Referral', path: '/referral' },
+    { icon: <FaChartLine />, label: 'Referral', path: '/user/referral' },
     { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
     { icon: <FaChartLine />, label: 'Withdrawal', path: '/user/withdrawal' },
     { icon: <FaChartLine />, label: 'Transfer', path: '/transfer' },
@@ -79,7 +79,7 @@ export default function MainHeader () {
         </div>
         <div className='header-actions'>
           <button className='icon-btn' aria-label='Search'>
-            <FaSearch />
+            <FaExpand />
           </button>
           <button
             className='icon-btn'
