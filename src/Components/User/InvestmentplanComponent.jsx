@@ -105,7 +105,7 @@ export default function InvestmentPlanComponent () {
               className='plan-btn'
               onClick={() => alert(`You selected ${plan.title}`)}
             >
-              Make Deposit
+              INVEST NOW
             </button>
           </div>
         ))}

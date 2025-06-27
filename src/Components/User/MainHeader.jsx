@@ -44,8 +44,31 @@ export default function MainHeader () {
     { icon: <FaSignOutAlt />, label: 'Logout', path: '/logout' }
   ]
 
+  // Google Translate integration (React-safe)
+  useEffect(() => {
+    if (!document.getElementById('google-translate-script')) {
+      const script = document.createElement('script')
+      script.id = 'google-translate-script'
+      script.type = 'text/javascript'
+      script.src =
+        '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+      document.body.appendChild(script)
+      window.googleTranslateElementInit = function () {
+        // @ts-ignore
+        new window.google.translate.TranslateElement(
+          { pageLanguage: 'en' },
+          'google_translate_element'
+        )
+      }
+    }
+  }, [])
+
   return (
     <div>
+      <div
+        id='google_translate_element'
+        style={{ position: 'absolute', top: 0, zIndex: 9999 }}
+      ></div>
       <header className='dashboard-header'>
         <div className='logo-section'>
           <span className='brand-name'>Thunder - Xtorm</span>
