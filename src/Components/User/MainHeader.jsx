@@ -8,11 +8,13 @@ import {
   FaSignOutAlt,
   FaExpand
 } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 export default function MainHeader () {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,10 +43,15 @@ export default function MainHeader () {
     { icon: <FaChartLine />, label: 'History', path: '/history' },
     { icon: <FaChartLine />, label: 'KYC', path: '/kyc' },
     { icon: <FaChartLine />, label: 'Password', path: '/password' },
-    { icon: <FaSignOutAlt />, label: 'Logout', path: '/logout' }
+    {
+      icon: <FaSignOutAlt />,
+      label: 'Logout',
+      path: '/logout',
+      action: 'logout'
+    }
   ]
 
-  // Google Translate integration (React-safe)
+  // Google Translate integration
   useEffect(() => {
     if (!document.getElementById('google-translate-script')) {
       const script = document.createElement('script')
@@ -63,6 +70,13 @@ export default function MainHeader () {
     }
   }, [])
 
+  const handleLogout = e => {
+    e.preventDefault()
+    localStorage.removeItem('token')
+    setDrawerOpen(false)
+    navigate('/')
+  }
+
   return (
     <div>
       <div
@@ -75,10 +89,11 @@ export default function MainHeader () {
             src='https://i.postimg.cc/NjS69Ysh/thunder-Xtorm-logo.png'
             alt='company logo'
             className='brand-name'
+            style={{ height: 36, width: 'auto', marginRight: 12 }}
           />
         </div>
         <div className='header-actions'>
-          <button className='icon-btn' aria-label='Search'>
+          <button className='icon-btn' aria-label='Expand'>
             <FaExpand />
           </button>
           <button
@@ -91,15 +106,13 @@ export default function MainHeader () {
         </div>
       </header>
 
-      {/* Overlay */}
       {drawerOpen && (
         <div className='drawer-overlay' onClick={() => setDrawerOpen(false)} />
       )}
 
-      {/* Sidebar Drawer */}
       <nav
-        className={`drawer ${drawerOpen ? 'open' : ''} ${
-          isMobile ? 'mobile' : ''
+        className={`drawer${drawerOpen ? ' open' : ''}${
+          isMobile ? ' mobile' : ''
         }`}
       >
         <button
@@ -111,10 +124,32 @@ export default function MainHeader () {
         <ul className='drawer-list'>
           {sidebarLinks.map((link, index) => (
             <li key={index} onClick={() => setDrawerOpen(false)}>
-              <Link to={link.path} className='drawer-link'>
-                <span className='drawer-icon'>{link.icon}</span>
-                <span>{link.label}</span>
-              </Link>
+              {link.action === 'logout' ? (
+                <a
+                  href='/'
+                  className='drawer-link'
+                  onClick={handleLogout}
+                  style={{
+                    color:
+                      location.pathname === link.path ? '#00d4ff' : undefined
+                  }}
+                >
+                  <span className='drawer-icon'>{link.icon}</span>
+                  <span>{link.label}</span>
+                </a>
+              ) : (
+                <Link
+                  to={link.path}
+                  className='drawer-link'
+                  style={{
+                    color:
+                      location.pathname === link.path ? '#00d4ff' : undefined
+                  }}
+                >
+                  <span className='drawer-icon'>{link.icon}</span>
+                  <span>{link.label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
