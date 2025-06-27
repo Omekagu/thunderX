@@ -29,13 +29,13 @@ export default function MainHeader () {
     { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
     { icon: <FaUser />, label: 'Profile', path: '/profile' },
     { icon: <FaChartLine />, label: 'Referral', path: '/referral' },
-    { icon: <FaChartLine />, label: 'Deposit', path: '/deposit' },
+    { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
     { icon: <FaChartLine />, label: 'Withdrawal', path: '/withdrawal' },
     { icon: <FaChartLine />, label: 'Transfer', path: '/transfer' },
     {
       icon: <FaChartLine />,
       label: 'Investment Plan',
-      path: '/investmentPlans'
+      path: '/user/investmentPlans'
     },
     { icon: <FaChartLine />, label: 'Card', path: '/card' },
     { icon: <FaChartLine />, label: 'History', path: '/history' },
