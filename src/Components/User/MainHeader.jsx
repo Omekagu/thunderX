@@ -88,7 +88,7 @@ export default function MainHeader () {
           label: 'Withdrawal',
           path: '/user/withdrawal'
         },
-        { icon: <FaExchangeAlt />, label: 'Transfer', path: '/transfer' }
+        { icon: <FaExchangeAlt />, label: 'Transfer', path: '/user/transfer' }
       ]
     },
     {
@@ -194,7 +194,7 @@ export default function MainHeader () {
                       style={{
                         color:
                           location.pathname === link.path
-                            ? '#00d4ff'
+                            ? '#61CE70'
                             : undefined
                       }}
                     >
@@ -208,7 +208,7 @@ export default function MainHeader () {
                       style={{
                         color:
                           location.pathname === link.path
-                            ? '#00d4ff'
+                            ? '#61CE70'
                             : undefined
                       }}
                     >

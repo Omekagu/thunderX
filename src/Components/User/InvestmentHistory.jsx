@@ -67,7 +67,7 @@ const typeToIcon = {
 const typeToColor = {
   Deposit: '#47fd65',
   Withdraw: '#ff637d',
-  Interest: '#7a5fff',
+  Interest: '#61CE70',
   Dividend: '#ffd700'
 }
 

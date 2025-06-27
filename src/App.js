@@ -34,6 +34,17 @@ import InvestmentPlan from './Pages/UserRoutes/tabs/InvestmentPlan'
 import DepositPage from './Pages/UserRoutes/tabs/DepositPage'
 import WithdrawalPage from './Pages/UserRoutes/tabs/WithdrawalPage'
 import ReferralPage from './Pages/UserRoutes/tabs/ReferralPage'
+import Profilepage from './Pages/UserRoutes/tabs/Profilepage'
+import ActivePlanPage from './Pages/UserRoutes/tabs/ActivePlanPage'
+import EarningsPage from './Pages/UserRoutes/tabs/EarningsPage'
+import LoansPage from './Pages/UserRoutes/tabs/LoansPage'
+import ApplyLoanPage from './Pages/UserRoutes/tabs/ApplyLoanPage'
+import LoanHistory from './Pages/UserRoutes/tabs/LoanHistory'
+import TransferPage from './Pages/UserRoutes/tabs/TransferPage'
+import CardPage from './Pages/UserRoutes/tabs/CardPage'
+import HistoryPage from './Pages/UserRoutes/tabs/HistoryPage'
+import KycPage from './Pages/UserRoutes/tabs/KycPage'
+import PasswordPage from './Pages/UserRoutes/tabs/PasswordPage'
 
 function App () {
   return (
@@ -45,10 +56,32 @@ function App () {
           <Route path='/user/dashboard' element={<UserDashboard />} />
         </Route>
         {/* User Routes */}
+        {/*  */}
+        <Route path='/user/profile' element={<Profilepage />} />
         <Route path='/user/investmentPlans' element={<InvestmentPlan />} />
+        <Route
+          path='/user/investmentPlans/active'
+          element={<ActivePlanPage />}
+        />
+        <Route
+          path='/user/investmentPlans/earnings'
+          element={<EarningsPage />}
+        />
+        {/* Loans */}
+        <Route path='/user/Loans' element={<LoansPage />} />
+        <Route path='/user/Loans/apply' element={<ApplyLoanPage />} />
+        <Route path='/user/Loans/history' element={<LoanHistory />} />
+
+        {/* Transactions */}
+        <Route path='/user/referral' element={<ReferralPage />} />
         <Route path='/user/deposit' element={<DepositPage />} />
         <Route path='/user/withdrawal' element={<WithdrawalPage />} />
-        <Route path='/user/referral' element={<ReferralPage />} />
+        <Route path='/user/transfer' element={<TransferPage />} />
+        {/*Privacy */}
+        <Route path='/user/card' element={<CardPage />} />
+        <Route path='/user/history' element={<HistoryPage />} />
+        <Route path='/user/kyc' element={<KycPage />} />
+        <Route path='/user/password' element={<PasswordPage />} />
 
         {/* Admin Routes */}
         <Route path='/dashboard/analytics' element={<Analytics />} />

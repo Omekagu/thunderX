@@ -47,7 +47,7 @@ export default function ReferralPage () {
       </>
       <div className='referral-card'>
         <h2>
-          <FaUserPlus style={{ marginRight: 7, color: '#00d4ff' }} />
+          <FaUserPlus style={{ marginRight: 7, color: '#61CE70' }} />
           Invite & Earn
         </h2>
         <p className='referral-desc'>Earn rewards for each referral</p>

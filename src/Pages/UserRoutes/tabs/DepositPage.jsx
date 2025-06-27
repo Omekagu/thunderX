@@ -359,7 +359,7 @@ export default function DepositPage () {
           <div className='deposit-card done'>
             <FaCheckCircle
               size={48}
-              color='#00d4ff'
+              color='#61CE70'
               style={{ marginBottom: 16 }}
             />
             <h2>Deposit Submitted!</h2>

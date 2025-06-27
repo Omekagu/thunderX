@@ -304,7 +304,7 @@ export default function WithdrawalPage () {
                       style={{
                         margin: '0 auto',
                         fontWeight: 600,
-                        color: '#00d4ff'
+                        color: '#61CE70'
                       }}
                     >
                       {selectedCrypto.icon} {selectedCrypto.label}
@@ -390,7 +390,7 @@ export default function WithdrawalPage () {
           <div className='withdrawalPage-card done'>
             <FaCheckCircle
               size={48}
-              color='#00d4ff'
+              color='#61CE70'
               style={{ marginBottom: 16 }}
             />
             <h2>Withdrawal Submitted!</h2>
