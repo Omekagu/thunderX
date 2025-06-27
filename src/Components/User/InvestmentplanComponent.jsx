@@ -7,7 +7,10 @@ const plans = [
     profit: '60%',
     minDeposit: '5,00',
     maxDeposit: '5,000',
-    minWithdraw: '50'
+    minWithdraw: '50',
+    duration: 'Every 5mins',
+    for: '30days',
+    capital_back: 'Yes'
   },
   {
     id: 2,
@@ -15,7 +18,10 @@ const plans = [
     profit: '65%',
     minDeposit: '6,000',
     maxDeposit: '10,000',
-    minWithdraw: '50'
+    minWithdraw: '50',
+    duration: 'Every 5mins',
+    for: '30days',
+    capital_back: 'Yes'
   },
   {
     id: 3,
@@ -23,7 +29,10 @@ const plans = [
     profit: '70%',
     minDeposit: '9,000',
     maxDeposit: '15,000',
-    minWithdraw: '50'
+    minWithdraw: '50',
+    duration: 'Every 5mins',
+    for: '30days',
+    capital_back: 'Yes'
   },
   {
     id: 4,
@@ -31,7 +40,10 @@ const plans = [
     profit: '75%',
     minDeposit: '14,000',
     maxDeposit: '20,000',
-    minWithdraw: '50'
+    minWithdraw: '50',
+    duration: 'Every 5mins',
+    for: '30days',
+    capital_back: 'Yes'
   },
   {
     id: 5,
@@ -39,7 +51,10 @@ const plans = [
     profit: '80%',
     minDeposit: '50,000',
     maxDeposit: '100,000,000',
-    minWithdraw: '50'
+    minWithdraw: '50',
+    duration: 'Every 5mins',
+    for: '30days',
+    capital_back: 'Yes'
   }
 ]
 
@@ -60,13 +75,25 @@ export default function InvestmentPlanComponent () {
             </p>
             <ul>
               <li>
-                <span>Min Deposit:</span> <strong>${plan.minDeposit}</strong>
+                <span>{plan.duration}</span>
+              </li>
+              <li>
+                <span>Min Deposit:</span>{' '}
+                <strong style={{ alignSelf: 'flex-start' }}>
+                  ${plan.minDeposit}
+                </strong>
               </li>
               <li>
                 <span>Max Deposit:</span> <strong>${plan.maxDeposit}</strong>
               </li>
               <li>
                 <span>Min Withdraw:</span> <strong>${plan.minWithdraw}</strong>
+              </li>
+              <li>
+                <span>Profit Duration:</span> <strong>{plan.for}</strong>
+              </li>
+              <li>
+                <span>Capital Back:</span> <strong>{plan.capital_back}</strong>
               </li>
             </ul>
 

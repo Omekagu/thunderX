@@ -4,11 +4,7 @@
 }
 .investmentplans-section {
   padding: 4rem 1.5rem;
-  background: linear-gradient(
-    135deg,
-    rgba(24, 27, 44, 0.8) 0%,
-    rgba(8, 16, 33, 0.7) 100%
-  );
+  background: linear-gradient(135deg, #5b5089 0%, #181818 100%);
   color: #f5f7fa;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   backdrop-filter: blur(3px);
@@ -32,10 +28,10 @@
   }
   p {
     color: #b0b8c4;
-    font-size: 1.1rem;
+    font-size: 1rem;
     max-width: 650px;
     margin: 0 auto 2rem;
-    font-weight: 500;
+    font-weight: 900;
     letter-spacing: 0.02em;
   }
 }
@@ -120,6 +116,7 @@
       margin-bottom: 0.55rem;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.5rem;
       span {
         color: #8a99b8;
@@ -129,8 +126,8 @@
       }
       strong {
         color: #00e0ff;
-        font-weight: 700;
-        font-size: 1.08em;
+        font-weight: 900;
+        font-size: 1.58em;
       }
     }
   }
