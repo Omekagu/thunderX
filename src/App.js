@@ -30,6 +30,7 @@ import Analytics from './Pages/adminroutes/dashboard/Analytics'
 import DashBoard from './Pages/adminroutes/DashBoard'
 import Bookings from './Pages/adminroutes//manage-users/Bookings'
 import { UserDashboard } from './Pages/UserRoutes/tabs/UserDashboard'
+import InvestmentPlan from './Pages/UserRoutes/tabs/InvestmentPlan'
 
 function App () {
   return (
@@ -41,6 +42,7 @@ function App () {
           <Route path='/user/dashboard' element={<UserDashboard />} />
         </Route>
         <Route path='/dashboard/analytics' element={<Analytics />} />
+        <Route path='/investmentPlans' element={<InvestmentPlan />} />
         <Route exact path='/Reservations' element={<Reservations />} />
         <Route exact path='/manage-rooms' element={<ManageRooms />} />
         <Route exact path='/staff-scetion' element={<StaffSection />} />

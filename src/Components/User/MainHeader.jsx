@@ -8,25 +8,41 @@ import {
   FaChartLine,
   FaSignOutAlt
 } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export default function MainHeader () {
-  // Detect mobile view
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 600)
-  const [drawerOpen, setDrawerOpen] = useState(() => window.innerWidth <= 600)
+  const [drawerOpen, setDrawerOpen] = useState(() => window.innerWidth > 600)
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 600
       setIsMobile(mobile)
-      if (mobile) {
-        setDrawerOpen(false)
-      } else {
-        setDrawerOpen(true)
-      }
+      setDrawerOpen(!mobile)
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  // Sidebar links
+  const sidebarLinks = [
+    { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
+    { icon: <FaUser />, label: 'Profile', path: '/profile' },
+    { icon: <FaChartLine />, label: 'Referral', path: '/referral' },
+    { icon: <FaChartLine />, label: 'Deposit', path: '/deposit' },
+    { icon: <FaChartLine />, label: 'Withdrawal', path: '/withdrawal' },
+    { icon: <FaChartLine />, label: 'Transfer', path: '/transfer' },
+    {
+      icon: <FaChartLine />,
+      label: 'Investment Plan',
+      path: '/investmentPlans'
+    },
+    { icon: <FaChartLine />, label: 'Card', path: '/card' },
+    { icon: <FaChartLine />, label: 'History', path: '/history' },
+    { icon: <FaChartLine />, label: 'KYC', path: '/kyc' },
+    { icon: <FaChartLine />, label: 'Password', path: '/password' },
+    { icon: <FaSignOutAlt />, label: 'Logout', path: '/logout' }
+  ]
 
   return (
     <div>
@@ -50,12 +66,12 @@ export default function MainHeader () {
         </div>
       </header>
 
-      {/* Drawer Overlay (desktop only) */}
+      {/* Overlay (desktop only) */}
       {drawerOpen && !isMobile && (
         <div className='drawer-overlay' onClick={() => setDrawerOpen(false)} />
       )}
 
-      {/* Drawer Sidebar */}
+      {/* Sidebar Drawer */}
       <nav className={`drawer ${drawerOpen ? 'open' : ''}`}>
         {!isMobile && (
           <button
@@ -66,45 +82,14 @@ export default function MainHeader () {
           </button>
         )}
         <ul className='drawer-list'>
-          <li>
-            <FaHome className='drawer-icon' /> <span>Dashboard</span>
-          </li>
-          <li>
-            <FaUser className='drawer-icon' /> <span>Profile</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Referral</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Deposit</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>withdrawal</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Transfer</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Invesment plan</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Card</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>History</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>KYC</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Password</span>
-          </li>
-          <li>
-            <FaChartLine className='drawer-icon' /> <span>Card</span>
-          </li>
-          <li>
-            <FaSignOutAlt className='drawer-icon' /> <span>Logout</span>
-          </li>
+          {sidebarLinks.map((link, index) => (
+            <li key={index}>
+              <Link to={link.path} className='drawer-link'>
+                <span className='drawer-icon'>{link.icon}</span>
+                <span>{link.label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>
