@@ -28,6 +28,7 @@
 }
 
 .dashboard-header {
+  background: linear-gradient(135deg, #5b5089 0%, #181818 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,13 +38,14 @@
   z-index: 2;
 
   .logo-section {
+    // background: linear-gradient(135deg, #5b5089 0%, #181818 100%);
     display: flex;
     .brand-name {
       font-weight: 900;
       font-size: 1.1rem;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: #fff;
+      color: #000;
       text-shadow: 0 2px 8px #22176885;
       transition: color 0.3s;
     }

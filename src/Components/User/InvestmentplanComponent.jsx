@@ -5,41 +5,41 @@ const plans = [
     id: 1,
     title: 'ARGENT+ PACK',
     profit: '60%',
-    minDeposit: 50,
-    maxDeposit: 50,
-    minWithdraw: 50
+    minDeposit: '5,00',
+    maxDeposit: '5,000',
+    minWithdraw: '50'
   },
   {
     id: 2,
     title: 'GOLD PACK',
     profit: '65%',
-    minDeposit: 50,
-    maxDeposit: 50,
-    minWithdraw: 50
+    minDeposit: '6,000',
+    maxDeposit: '10,000',
+    minWithdraw: '50'
   },
   {
     id: 3,
     title: 'ARGENT PACK',
     profit: '70%',
-    minDeposit: 50,
-    maxDeposit: 50,
-    minWithdraw: 50
+    minDeposit: '9,000',
+    maxDeposit: '15,000',
+    minWithdraw: '50'
   },
   {
     id: 4,
     title: 'PLATINUM PACK',
     profit: '75%',
-    minDeposit: 50,
-    maxDeposit: 50,
-    minWithdraw: 50
+    minDeposit: '14,000',
+    maxDeposit: '20,000',
+    minWithdraw: '50'
   },
   {
     id: 5,
     title: 'VIP PACK',
     profit: '80%',
-    minDeposit: 3000,
-    maxDeposit: 50,
-    minWithdraw: 50
+    minDeposit: '50,000',
+    maxDeposit: '100,000,000',
+    minWithdraw: '50'
   }
 ]
 
@@ -47,11 +47,7 @@ export default function InvestmentPlanComponent () {
   return (
     <section className='investmentplans-section'>
       <div className='investmentplans-header'>
-        <h2>Investment Offers</h2>
-        <p>
-          Choose your plan below. You can withdraw profits anytime, but
-          principal balance requires at least one month before withdrawal.
-        </p>
+        <h2>Real Estate</h2>
       </div>
       <div className='investmentplans-grid'>
         {plans.map(plan => (
@@ -73,6 +69,11 @@ export default function InvestmentPlanComponent () {
                 <span>Min Withdraw:</span> <strong>${plan.minWithdraw}</strong>
               </li>
             </ul>
+
+            <p>
+              You can withdraw profits anytime, but principal balance requires
+              at least one month before withdrawal.
+            </p>
             <button
               className='plan-btn'
               onClick={() => alert(`You selected ${plan.title}`)}
