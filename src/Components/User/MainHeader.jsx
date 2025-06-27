@@ -67,7 +67,7 @@ export default function MainHeader () {
     <div>
       <div
         id='google_translate_element'
-        style={{ position: 'absolute', top: 0, zIndex: 9999 }}
+        style={{ position: 'absolute', top: 2, zIndex: 9999 }}
       ></div>
       <header className='dashboard-header'>
         <div className='logo-section'>
