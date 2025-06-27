@@ -1,5 +1,5 @@
 import React from 'react'
-import { RiDownload2Line, RiUpload2Line } from 'react-icons/ri'
+// import { RiDownload2Line, RiUpload2Line } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 
 export const UserAmount = () => {
@@ -24,14 +24,14 @@ export const UserAmount = () => {
       <div className='user-actions-row'>
         <button className='user-action-btn'>
           <Link to={'/user/deposit'}>
-            <RiDownload2Line className='action-icon' />
+            {/* <RiDownload2Line className='action-icon' /> */}
             Deposit
           </Link>
         </button>
         <span className='user-action-divider' />
         <button className='user-action-btn'>
           <Link to={'/user/withdrawal'}>
-            <RiUpload2Line className='user-action-icon' />
+            {/* <RiUpload2Line className='user-action-icon' /> */}
             Withdraw
           </Link>
         </button>

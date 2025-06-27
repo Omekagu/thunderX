@@ -1,4 +1,7 @@
 .dashboard-background {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
   min-height: 100%;
   width: 100vw;
   background: #7a5fff;
@@ -97,6 +100,8 @@
 
 /* Quick Balance Card */
 .user-amount-card {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   align-self: center;
   background: linear-gradient(135deg, #232038 60%, #2f365c 100%);
   border-radius: 20px;
@@ -338,78 +343,6 @@
         .amount {
           font-weight: 500;
         }
-      }
-    }
-  }
-}
-
-/* Investment History Section */
-.investment-history {
-  background: #4d39b2;
-  border-radius: 5px;
-  padding: 18px 16px 10px 16px;
-  color: #fff;
-  box-shadow: 0 8px 32px #18181815, 0 2px 12px #7a5fff18;
-  margin-bottom: 0;
-  .history-header {
-    font-size: 1.14rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #000;
-    letter-spacing: 0.03em;
-  }
-  .history-list {
-    .history-item {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px;
-      border-bottom: 1px solid #2e3653;
-      &:last-child {
-        border-bottom: none;
-      }
-      .history-icon {
-        min-width: 36px;
-        min-height: 36px;
-        width: 36px;
-        height: 36px;
-        font-size: 1.12rem;
-        border-radius: 50%;
-        background: #232038;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 1px 5px #00d4ff11;
-      }
-      .history-type {
-        font-size: 1.01rem;
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 1.5px;
-        letter-spacing: 0.01em;
-      }
-      .history-amount {
-        font-size: 1.04rem;
-        font-weight: 800;
-        color: #0bfc33;
-        margin-bottom: 2px;
-        letter-spacing: 0.01em;
-      }
-      .history-date,
-      .history-status,
-      .history-desc {
-        font-size: 0.92rem;
-        color: #b0b8c4;
-        font-weight: 500;
-      }
-      .history-status.success {
-        color: #0bfc33;
-      }
-      .history-status.failed {
-        color: #ff5555;
-      }
-      .history-status.pending {
-        color: #f7b32b;
       }
     }
   }
