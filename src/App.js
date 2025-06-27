@@ -44,11 +44,14 @@ function App () {
           <Route path='/admin/dashboard' element={<DashBoard />} />
           <Route path='/user/dashboard' element={<UserDashboard />} />
         </Route>
-        <Route path='/dashboard/analytics' element={<Analytics />} />
+        {/* User Routes */}
         <Route path='/user/investmentPlans' element={<InvestmentPlan />} />
         <Route path='/user/deposit' element={<DepositPage />} />
         <Route path='/user/withdrawal' element={<WithdrawalPage />} />
         <Route path='/user/referral' element={<ReferralPage />} />
+
+        {/* Admin Routes */}
+        <Route path='/dashboard/analytics' element={<Analytics />} />
         <Route exact path='/Reservations' element={<Reservations />} />
         <Route exact path='/manage-rooms' element={<ManageRooms />} />
         <Route exact path='/staff-scetion' element={<StaffSection />} />

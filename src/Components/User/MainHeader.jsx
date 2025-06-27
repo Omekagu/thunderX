@@ -39,7 +39,7 @@ export default function MainHeader () {
       header: null,
       links: [
         { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
-        { icon: <FaUser />, label: 'Profile', path: '/profile' }
+        { icon: <FaUser />, label: 'Profile', path: '/user/profile' }
       ]
     },
     {
@@ -79,7 +79,7 @@ export default function MainHeader () {
       ]
     },
     {
-      header: null,
+      header: 'Transactions',
       links: [
         { icon: <FaChartLine />, label: 'Referral', path: '/user/referral' },
         { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
@@ -88,11 +88,16 @@ export default function MainHeader () {
           label: 'Withdrawal',
           path: '/user/withdrawal'
         },
-        { icon: <FaExchangeAlt />, label: 'Transfer', path: '/transfer' },
-        { icon: <FaCreditCard />, label: 'Card', path: '/card' },
-        { icon: <FaHistory />, label: 'History', path: '/history' },
-        { icon: <FaIdBadge />, label: 'KYC', path: '/kyc' },
-        { icon: <FaKey />, label: 'Password', path: '/password' },
+        { icon: <FaExchangeAlt />, label: 'Transfer', path: '/transfer' }
+      ]
+    },
+    {
+      header: 'Privacy',
+      links: [
+        { icon: <FaCreditCard />, label: 'Card', path: '/user/card' },
+        { icon: <FaHistory />, label: 'History', path: '/user/history' },
+        { icon: <FaIdBadge />, label: 'KYC', path: '/user/kyc' },
+        { icon: <FaKey />, label: 'Password', path: '/user/password' },
         {
           icon: <FaSignOutAlt />,
           label: 'Logout',
