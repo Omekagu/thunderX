@@ -11,14 +11,14 @@ import {
 import { Link } from 'react-router-dom'
 
 export default function MainHeader () {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 600)
-  const [drawerOpen, setDrawerOpen] = useState(() => window.innerWidth > 600)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 600
       setIsMobile(mobile)
-      setDrawerOpen(!mobile)
+      if (!mobile) setDrawerOpen(false)
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -54,36 +54,36 @@ export default function MainHeader () {
           <button className='icon-btn' aria-label='Search'>
             <FaSearch />
           </button>
-          {!isMobile && (
-            <button
-              className='icon-btn'
-              aria-label='Menu'
-              onClick={() => setDrawerOpen(true)}
-            >
-              <FaBars />
-            </button>
-          )}
+          <button
+            className='icon-btn'
+            aria-label='Menu'
+            onClick={() => setDrawerOpen(true)}
+          >
+            <FaBars />
+          </button>
         </div>
       </header>
 
-      {/* Overlay (desktop only) */}
-      {drawerOpen && !isMobile && (
+      {/* Overlay */}
+      {drawerOpen && (
         <div className='drawer-overlay' onClick={() => setDrawerOpen(false)} />
       )}
 
       {/* Sidebar Drawer */}
-      <nav className={`drawer ${drawerOpen ? 'open' : ''}`}>
-        {!isMobile && (
-          <button
-            className='drawer-close-btn'
-            onClick={() => setDrawerOpen(false)}
-          >
-            <FaTimes />
-          </button>
-        )}
+      <nav
+        className={`drawer ${drawerOpen ? 'open' : ''} ${
+          isMobile ? 'mobile' : ''
+        }`}
+      >
+        <button
+          className='drawer-close-btn'
+          onClick={() => setDrawerOpen(false)}
+        >
+          <FaTimes />
+        </button>
         <ul className='drawer-list'>
           {sidebarLinks.map((link, index) => (
-            <li key={index}>
+            <li key={index} onClick={() => setDrawerOpen(false)}>
               <Link to={link.path} className='drawer-link'>
                 <span className='drawer-icon'>{link.icon}</span>
                 <span>{link.label}</span>
