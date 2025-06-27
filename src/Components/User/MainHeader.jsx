@@ -6,7 +6,14 @@ import {
   FaUser,
   FaChartLine,
   FaSignOutAlt,
-  FaExpand
+  FaExpand,
+  FaMoneyCheckAlt,
+  FaPiggyBank,
+  FaCreditCard,
+  FaHistory,
+  FaIdBadge,
+  FaKey,
+  FaExchangeAlt
 } from 'react-icons/fa'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
@@ -26,28 +33,73 @@ export default function MainHeader () {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Sidebar links
-  const sidebarLinks = [
-    { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
-    { icon: <FaUser />, label: 'Profile', path: '/profile' },
-    { icon: <FaChartLine />, label: 'Referral', path: '/user/referral' },
-    { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
-    { icon: <FaChartLine />, label: 'Withdrawal', path: '/user/withdrawal' },
-    { icon: <FaChartLine />, label: 'Transfer', path: '/transfer' },
+  // Sidebar structure with headers and sub-links
+  const sidebarSections = [
     {
-      icon: <FaChartLine />,
-      label: 'Investment Plan',
-      path: '/user/investmentPlans'
+      header: null,
+      links: [
+        { icon: <FaHome />, label: 'Dashboard', path: '/user/dashboard' },
+        { icon: <FaUser />, label: 'Profile', path: '/profile' }
+      ]
     },
-    { icon: <FaChartLine />, label: 'Card', path: '/card' },
-    { icon: <FaChartLine />, label: 'History', path: '/history' },
-    { icon: <FaChartLine />, label: 'KYC', path: '/kyc' },
-    { icon: <FaChartLine />, label: 'Password', path: '/password' },
     {
-      icon: <FaSignOutAlt />,
-      label: 'Logout',
-      path: '/logout',
-      action: 'logout'
+      header: 'Investment Plans',
+      links: [
+        {
+          icon: <FaPiggyBank />,
+          label: 'All Plans',
+          path: '/user/investmentPlans'
+        },
+        {
+          icon: <FaChartLine />,
+          label: 'Active Investments',
+          path: '/user/investmentPlans/active'
+        },
+        {
+          icon: <FaChartLine />,
+          label: 'Earnings',
+          path: '/user/investmentPlans/earnings'
+        }
+      ]
+    },
+    {
+      header: 'Loans',
+      links: [
+        { icon: <FaMoneyCheckAlt />, label: 'My Loans', path: '/user/Loans' },
+        {
+          icon: <FaMoneyCheckAlt />,
+          label: 'Apply for Loan',
+          path: '/user/Loans/apply'
+        },
+        {
+          icon: <FaMoneyCheckAlt />,
+          label: 'Loan History',
+          path: '/user/Loans/history'
+        }
+      ]
+    },
+    {
+      header: null,
+      links: [
+        { icon: <FaChartLine />, label: 'Referral', path: '/user/referral' },
+        { icon: <FaChartLine />, label: 'Deposit', path: '/user/deposit' },
+        {
+          icon: <FaChartLine />,
+          label: 'Withdrawal',
+          path: '/user/withdrawal'
+        },
+        { icon: <FaExchangeAlt />, label: 'Transfer', path: '/transfer' },
+        { icon: <FaCreditCard />, label: 'Card', path: '/card' },
+        { icon: <FaHistory />, label: 'History', path: '/history' },
+        { icon: <FaIdBadge />, label: 'KYC', path: '/kyc' },
+        { icon: <FaKey />, label: 'Password', path: '/password' },
+        {
+          icon: <FaSignOutAlt />,
+          label: 'Logout',
+          path: '/logout',
+          action: 'logout'
+        }
+      ]
     }
   ]
 
@@ -122,35 +174,46 @@ export default function MainHeader () {
           <FaTimes />
         </button>
         <ul className='drawer-list'>
-          {sidebarLinks.map((link, index) => (
-            <li key={index} onClick={() => setDrawerOpen(false)}>
-              {link.action === 'logout' ? (
-                <a
-                  href='/'
-                  className='drawer-link'
-                  onClick={handleLogout}
-                  style={{
-                    color:
-                      location.pathname === link.path ? '#00d4ff' : undefined
-                  }}
-                >
-                  <span className='drawer-icon'>{link.icon}</span>
-                  <span>{link.label}</span>
-                </a>
-              ) : (
-                <Link
-                  to={link.path}
-                  className='drawer-link'
-                  style={{
-                    color:
-                      location.pathname === link.path ? '#00d4ff' : undefined
-                  }}
-                >
-                  <span className='drawer-icon'>{link.icon}</span>
-                  <span>{link.label}</span>
-                </Link>
+          {sidebarSections.map((section, i) => (
+            <React.Fragment key={i}>
+              {section.header && (
+                <li className='drawer-category-header'>{section.header}</li>
               )}
-            </li>
+              {section.links.map((link, idx) => (
+                <li key={link.path + idx} onClick={() => setDrawerOpen(false)}>
+                  {link.action === 'logout' ? (
+                    <a
+                      href='/'
+                      className='drawer-link'
+                      onClick={handleLogout}
+                      style={{
+                        color:
+                          location.pathname === link.path
+                            ? '#00d4ff'
+                            : undefined
+                      }}
+                    >
+                      <span className='drawer-icon'>{link.icon}</span>
+                      <span>{link.label}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className='drawer-link'
+                      style={{
+                        color:
+                          location.pathname === link.path
+                            ? '#00d4ff'
+                            : undefined
+                      }}
+                    >
+                      <span className='drawer-icon'>{link.icon}</span>
+                      <span>{link.label}</span>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </React.Fragment>
           ))}
         </ul>
       </nav>

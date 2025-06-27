@@ -98,6 +98,21 @@
   }
 }
 
+.drawer-list {
+  .drawer-category-header {
+    font-size: 1.01rem;
+    font-weight: 800;
+    color: #7a5fff;
+    margin: 12px 0 6px 0;
+    padding-left: 2px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.94;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+
 /* Quick Balance Card */
 .user-amount-card {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
