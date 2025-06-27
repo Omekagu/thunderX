@@ -71,7 +71,11 @@ export default function MainHeader () {
       ></div>
       <header className='dashboard-header'>
         <div className='logo-section'>
-          <span className='brand-name'>Thunder - Xtorm</span>
+          <img
+            src='https://i.postimg.cc/NjS69Ysh/thunder-Xtorm-logo.png'
+            alt='company logo'
+            className='brand-name'
+          />
         </div>
         <div className='header-actions'>
           <button className='icon-btn' aria-label='Search'>

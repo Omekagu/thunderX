@@ -67,11 +67,11 @@ const Login = () => {
       <ToastContainer />
       <div className='login__container'>
         <img
-          src='https://i.postimg.cc/vBGy3rS3/Screenshot-2024-11-25-145218.png'
+          src='https://i.postimg.cc/NjS69Ysh/thunder-Xtorm-logo.png'
           alt='logo'
           className='login__img'
         />
-        <h3 className='login__head'>Admin Login</h3>
+        <h3 className='login__head'>Login</h3>
 
         <form onSubmit={handleLogin} className='login__form'>
           <Input

@@ -1,5 +1,5 @@
 .login {
-  background-image: url(../../../public/image/LoginBg.png);
+  background-image: url('https://images.pexels.com/photos/936722/pexels-photo-936722.jpeg');
   background-position: center;
   background-size: cover;
   min-height: 100vh;
@@ -75,14 +75,14 @@
   &__forgot-text {
     font-size: 1rem;
     text-transform: capitalize;
-    color: #a63932;
+    color: #7a5fff;
     cursor: pointer;
     align-self: flex-end;
     margin-bottom: 1rem;
     margin-top: -0.6rem;
     transition: color 0.2s;
     &:hover {
-      color: #8b2e28;
+      color: #6f5fbf;
     }
 
     @media (max-width: 768px) {
@@ -102,7 +102,7 @@
   padding: 13px 0;
   font-size: 1.09rem;
   color: #fff;
-  background-color: #a63932; /* Button color */
+  background-color: #7a5fff; /* Button color */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -112,7 +112,7 @@
   transition: background 0.3s ease-in-out, box-shadow 0.2s;
 
   &:hover {
-    background-color: #8b2e28;
+    background-color: #6f5fbf;
     box-shadow: 0 3px 10px 0 rgba(166, 57, 50, 0.08);
   }
 
@@ -140,7 +140,7 @@ input[type='email'] {
   margin-bottom: 0;
 
   &:focus {
-    border-color: #a63932;
+    border-color: #6f5fbf;
     background: #f8f6f7;
   }
 }
