@@ -4,34 +4,34 @@ import { Link } from 'react-router-dom'
 
 export const UserAmount = () => {
   return (
-    <section className='top-card'>
-      <div className='top-card-header'>
+    <section className='user-amount-card'>
+      <div className='user-amount-header'>
         <img
           src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg'
           alt='Profile'
-          className='profile-img'
+          className='user-profile-img'
         />
-        <div className='greeting-area'>
-          <span className='greeting'>Good Morning</span>
+        <div className='user-greeting-area'>
+          <span className='user-greeting'>Good Morning</span>
           <span className='user-name'>Hi, Omekagu Joseph</span>
         </div>
       </div>
-      <hr className='divider' />
-      <div className='spending-row'>
-        <span className='spending-label'>Wallet balance</span>
+      <hr className='user-divider' />
+      <div className='user-balance-row'>
+        <span className='user-balance-label'>Wallet balance</span>
       </div>
-      <div className='spending-amount'>$1050.99</div>
-      <div className='actions-row'>
-        <button className='action-btn'>
+      <div className='user-balance-amount'>$1050.99</div>
+      <div className='user-actions-row'>
+        <button className='user-action-btn'>
           <Link to={'/user/deposit'}>
             <RiDownload2Line className='action-icon' />
             Deposit
           </Link>
         </button>
-        <span className='action-divider' />
-        <button className='action-btn'>
+        <span className='user-action-divider' />
+        <button className='user-action-btn'>
           <Link to={'/user/withdrawal'}>
-            <RiUpload2Line className='action-icon' />
+            <RiUpload2Line className='user-action-icon' />
             Withdraw
           </Link>
         </button>
