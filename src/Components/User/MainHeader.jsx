@@ -17,13 +17,16 @@ import {
 } from 'react-icons/fa'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ethers } from 'ethers'
+import { Web3Modal } from 'web3modal'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 
-// Supported chains and some popular tokens
+// Supported chains and popular tokens (expand as needed)
 const CHAINS = [
   {
     id: 1,
     name: 'Ethereum',
     explorer: 'https://etherscan.io/tx/',
+    rpc: 'https://mainnet.infura.io/v3/',
     native: { symbol: 'ETH', decimals: 18 },
     tokens: [
       { name: 'ETH (native)', address: null, decimals: 18 },
@@ -43,6 +46,7 @@ const CHAINS = [
     id: 56,
     name: 'BSC',
     explorer: 'https://bscscan.com/tx/',
+    rpc: 'https://bsc-dataseed.binance.org/',
     native: { symbol: 'BNB', decimals: 18 },
     tokens: [
       { name: 'BNB (native)', address: null, decimals: 18 },
@@ -62,6 +66,7 @@ const CHAINS = [
     id: 137,
     name: 'Polygon',
     explorer: 'https://polygonscan.com/tx/',
+    rpc: 'https://polygon-rpc.com/',
     native: { symbol: 'MATIC', decimals: 18 },
     tokens: [
       { name: 'MATIC (native)', address: null, decimals: 18 },
@@ -77,7 +82,6 @@ const CHAINS = [
       }
     ]
   }
-  // Add more chains/tokens as needed
 ]
 
 const ERC20_ABI = [
@@ -86,22 +90,39 @@ const ERC20_ABI = [
   'function balanceOf(address) view returns (uint)'
 ]
 
+const web3Modal = new Web3Modal({
+  cacheProvider: true,
+  providerOptions: {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        rpc: {
+          1: CHAINS[0].rpc,
+          56: CHAINS[1].rpc,
+          137: CHAINS[2].rpc
+        }
+      }
+    }
+  }
+})
+
 export default function MainHeader () {
-  // UI state
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
   // Web3 state
-  const [selectedChainId, setSelectedChainId] = useState(1)
+  const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
+  const [walletAddress, setWalletAddress] = useState(null)
+  const [chainId, setChainId] = useState(1)
+  const [balances, setBalances] = useState([])
   const [selectedTokenIdx, setSelectedTokenIdx] = useState(0)
   const [recipient, setRecipient] = useState('')
   const [amount, setAmount] = useState('')
-  const [walletAddress, setWalletAddress] = useState(null)
   const [txHash, setTxHash] = useState(null)
   const [web3Error, setWeb3Error] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [balances, setBalances] = useState([])
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -180,7 +201,6 @@ export default function MainHeader () {
     }
   ]
 
-  // Responsive logic
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 600
@@ -191,121 +211,104 @@ export default function MainHeader () {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Google Translate integration
-  useEffect(() => {
-    if (!document.getElementById('google-translate-script')) {
-      const script = document.createElement('script')
-      script.id = 'google-translate-script'
-      script.type = 'text/javascript'
-      script.src =
-        '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
-      document.body.appendChild(script)
-      window.googleTranslateElementInit = function () {
-        // @ts-ignore
-        new window.google.translate.TranslateElement(
-          { pageLanguage: 'en' },
-          'google_translate_element'
-        )
-      }
+  // Connect wallet (MetaMask, WalletConnect, etc)
+  const connectWallet = async () => {
+    setWeb3Error(null)
+    try {
+      const instance = await web3Modal.connect()
+      const ethersProvider = new ethers.BrowserProvider(instance)
+      setProvider(ethersProvider)
+      const signer = await ethersProvider.getSigner()
+      setSigner(signer)
+      const address = await signer.getAddress()
+      setWalletAddress(address)
+      const network = await ethersProvider.getNetwork()
+      setChainId(Number(network.chainId))
+      return { ethersProvider, signer, address, network }
+    } catch (e) {
+      setWeb3Error('Could not connect wallet.')
     }
-  }, [])
+  }
 
-  // Fetch wallet & balances when modal opens and wallet is available
+  // Fetch balances after connection or when modal opens
   useEffect(() => {
-    async function fetchWalletAndBalances () {
-      setWeb3Error(null)
+    async function fetchBalances () {
       setBalances([])
       setWalletAddress(null)
+      setWeb3Error(null)
       if (!modalOpen) return
-      if (!window.ethereum) {
-        setWeb3Error(
-          'No wallet detected. Please install Trust Wallet, MetaMask or use WalletConnect.'
-        )
+      let _provider = provider
+      let _signer = signer
+      let _address = walletAddress
+      let _chainId = chainId
+      if (!provider || !signer || !walletAddress) {
+        const result = await connectWallet()
+        if (!result) return
+        _provider = result.ethersProvider
+        _signer = result.signer
+        _address = result.address
+        _chainId = Number(result.network.chainId)
+      }
+      setProvider(_provider)
+      setSigner(_signer)
+      setWalletAddress(_address)
+      setChainId(_chainId)
+      const chain = CHAINS.find(c => c.id === Number(_chainId))
+      if (!chain) {
+        setWeb3Error('Unsupported network.')
         return
       }
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' })
-        const provider = new ethers.BrowserProvider(window.ethereum)
-        const signer = await provider.getSigner()
-        const userAddress = await signer.getAddress()
-        setWalletAddress(userAddress)
-        const chain = CHAINS.find(c => c.id === Number(selectedChainId))
-        // Check current chain
-        const currentChainId = (await provider.getNetwork()).chainId
-        if (Number(currentChainId) !== chain.id) {
-          try {
-            const chainIdHex = '0x' + chain.id.toString(16)
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: chainIdHex }]
-            })
-          } catch (switchError) {
-            setWeb3Error('Please switch to the correct network in your wallet.')
-            return
-          }
+      // Native balance
+      const nativeBalance = await _provider.getBalance(_address)
+      const balancesArr = [
+        {
+          name: chain.native.symbol,
+          balance: ethers.formatUnits(nativeBalance, chain.native.decimals),
+          isNative: true,
+          address: null,
+          decimals: chain.native.decimals
         }
-        // Native balance
-        const nativeBalance = await provider.getBalance(userAddress)
-        const balancesArr = [
-          {
-            name: chain.native.symbol,
-            balance: ethers.formatUnits(nativeBalance, chain.native.decimals),
-            isNative: true,
-            address: null,
-            decimals: chain.native.decimals
-          }
-        ]
-        // Tokens
-        for (let token of chain.tokens) {
-          if (!token.address) continue
-          const contract = new ethers.Contract(
-            token.address,
-            ERC20_ABI,
-            provider
-          )
-          let balance = await contract.balanceOf(userAddress)
-          let decimals = token.decimals
-          try {
-            decimals = await contract.decimals()
-          } catch {}
-          balancesArr.push({
-            name: token.name,
-            balance: ethers.formatUnits(balance, decimals),
-            isNative: false,
-            address: token.address,
-            decimals
-          })
-        }
-        setBalances(balancesArr)
-      } catch (err) {
-        setWeb3Error(err.message || 'Could not fetch wallet info.')
+      ]
+      // Tokens
+      for (let token of chain.tokens) {
+        if (!token.address) continue
+        const contract = new ethers.Contract(
+          token.address,
+          ERC20_ABI,
+          _provider
+        )
+        let balance = await contract.balanceOf(_address)
+        let decimals = token.decimals
+        try {
+          decimals = await contract.decimals()
+        } catch {}
+        balancesArr.push({
+          name: token.name,
+          balance: ethers.formatUnits(balance, decimals),
+          isNative: false,
+          address: token.address,
+          decimals
+        })
       }
+      setBalances(balancesArr)
     }
-    fetchWalletAndBalances()
+    fetchBalances()
     // eslint-disable-next-line
-  }, [modalOpen, selectedChainId])
+  }, [modalOpen, chainId])
 
-  // Handle sending tokens/coins
+  // Send transaction
   const handleSend = async e => {
     e.preventDefault()
     setWeb3Error(null)
     setTxHash(null)
     setIsLoading(true)
     try {
-      if (!window.ethereum) {
-        setWeb3Error(
-          'No wallet detected. Please install Trust Wallet or MetaMask.'
-        )
+      if (!provider || !signer) {
+        setWeb3Error('Wallet not connected.')
         setIsLoading(false)
         return
       }
-      // connect wallet
-      await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.BrowserProvider(window.ethereum)
-      const signer = await provider.getSigner()
-      const userAddress = await signer.getAddress()
-      setWalletAddress(userAddress)
-      // const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+      // const chain = CHAINS.find(c => c.id === Number(chainId))
       const token = balances[selectedTokenIdx]
       if (!ethers.isAddress(recipient)) {
         setWeb3Error('Recipient address is invalid.')
@@ -360,15 +363,11 @@ export default function MainHeader () {
     navigate('/')
   }
 
-  const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+  const chain = CHAINS.find(c => c.id === Number(chainId))
   const explorerBase = chain?.explorer || 'https://etherscan.io/tx/'
 
   return (
     <div>
-      <div
-        id='google_translate_element'
-        style={{ position: 'absolute', top: 2, zIndex: 9999 }}
-      ></div>
       <header className='dashboard-header'>
         <div className='logo-section'>
           <img
@@ -416,11 +415,12 @@ export default function MainHeader () {
             className='modal-content'
             style={{
               background: '#fff',
-              maxWidth: 400,
+              maxWidth: 420,
               margin: '10vh auto',
-              padding: 24,
-              borderRadius: 10,
-              position: 'relative'
+              padding: 26,
+              borderRadius: 14,
+              position: 'relative',
+              boxShadow: '0 2px 20px rgba(0,0,0,0.15)'
             }}
           >
             <button
@@ -436,7 +436,16 @@ export default function MainHeader () {
             >
               ×
             </button>
-            <h2>Send Tokens</h2>
+            <h2 style={{ marginBottom: 6 }}>Send Tokens</h2>
+            {!walletAddress && (
+              <button
+                type='button'
+                onClick={connectWallet}
+                style={{ marginBottom: 10 }}
+              >
+                Connect Wallet
+              </button>
+            )}
             {walletAddress && (
               <div style={{ color: '#333', marginBottom: 10, fontSize: 13 }}>
                 Connected: {walletAddress}
@@ -446,9 +455,9 @@ export default function MainHeader () {
               <label>
                 Network
                 <select
-                  value={selectedChainId}
+                  value={chainId}
                   onChange={e => {
-                    setSelectedChainId(Number(e.target.value))
+                    setChainId(Number(e.target.value))
                     setSelectedTokenIdx(0)
                   }}
                 >
@@ -507,7 +516,7 @@ export default function MainHeader () {
               </label>
               <button
                 type='submit'
-                disabled={isLoading}
+                disabled={isLoading || !walletAddress}
                 style={{ marginTop: 12, width: '100%' }}
               >
                 {isLoading ? 'Sending...' : 'Send'}
