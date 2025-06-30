@@ -305,7 +305,7 @@ export default function MainHeader () {
       const signer = await provider.getSigner()
       const userAddress = await signer.getAddress()
       setWalletAddress(userAddress)
-      const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+      // const chain = CHAINS.find(c => c.id === Number(selectedChainId))
       const token = balances[selectedTokenIdx]
       if (!ethers.isAddress(recipient)) {
         setWeb3Error('Recipient address is invalid.')
