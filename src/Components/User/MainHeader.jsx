@@ -82,7 +82,8 @@ const CHAINS = [
 
 const ERC20_ABI = [
   'function transfer(address to, uint256 value) public returns (bool)',
-  'function decimals() view returns (uint8)'
+  'function decimals() view returns (uint8)',
+  'function balanceOf(address) view returns (uint)'
 ]
 
 export default function MainHeader () {
@@ -100,100 +101,9 @@ export default function MainHeader () {
   const [txHash, setTxHash] = useState(null)
   const [web3Error, setWeb3Error] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [balances, setBalances] = useState([])
   const navigate = useNavigate()
   const location = useLocation()
-
-  // Handles wallet connect + transaction
-  // Wallet connect and send
-  const handleSend = async e => {
-    e.preventDefault()
-    setWeb3Error(null)
-    setTxHash(null)
-    setIsLoading(true)
-    try {
-      if (!window.ethereum) {
-        setWeb3Error(
-          'No wallet detected. Please install Trust Wallet or MetaMask.'
-        )
-        setIsLoading(false)
-        return
-      }
-      // Connect wallet
-      await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.BrowserProvider(window.ethereum)
-      const signer = await provider.getSigner()
-      const userAddress = await signer.getAddress()
-      setWalletAddress(userAddress)
-      // Switch to correct chain if needed
-      const chain = CHAINS.find(c => c.id === Number(selectedChainId))
-      const chainIdHex = '0x' + chain.id.toString(16)
-      const currentChainId = (await provider.getNetwork()).chainId
-      if (Number(currentChainId) !== chain.id) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: chainIdHex }]
-          })
-        } catch (switchError) {
-          setWeb3Error('Please switch to the correct network in your wallet.')
-          setIsLoading(false)
-          return
-        }
-      }
-      // Send
-      const token = chain.tokens[selectedTokenIdx]
-      if (token.address == null) {
-        // Native coin transfer
-        const tx = await signer.sendTransaction({
-          to: recipient,
-          value: ethers.parseUnits(amount, chain.native.decimals)
-        })
-        setTxHash(tx.hash)
-      } else {
-        // Token transfer
-        const contract = new ethers.Contract(token.address, ERC20_ABI, signer)
-        // Use token.decimals, or fetch from contract (safer for new tokens)
-        let decimals = token.decimals
-        try {
-          decimals = await contract.decimals()
-        } catch {} // fallback to static decimals
-        const tx = await contract.transfer(
-          recipient,
-          ethers.parseUnits(amount, decimals)
-        )
-        setTxHash(tx.hash)
-      }
-      setModalOpen(false)
-      setRecipient('')
-      setAmount('')
-    } catch (err) {
-      if (err.code === 4001) {
-        setWeb3Error('Transaction rejected by user.')
-      } else {
-        setWeb3Error(err.message || 'Transaction failed')
-      }
-    }
-    setIsLoading(false)
-  }
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 600
-      setIsMobile(mobile)
-      if (!mobile) setDrawerOpen(false)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 600
-      setIsMobile(mobile)
-      if (!mobile) setDrawerOpen(false)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Sidebar structure with headers and sub-links
   const sidebarSections = [
@@ -270,6 +180,17 @@ export default function MainHeader () {
     }
   ]
 
+  // Responsive logic
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 600
+      setIsMobile(mobile)
+      if (!mobile) setDrawerOpen(false)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Google Translate integration
   useEffect(() => {
     if (!document.getElementById('google-translate-script')) {
@@ -289,9 +210,148 @@ export default function MainHeader () {
     }
   }, [])
 
-  // Modal for sending tokens
-  const chain = CHAINS.find(c => c.id === Number(selectedChainId))
-  const explorerBase = chain?.explorer || 'https://etherscan.io/tx/'
+  // Fetch wallet & balances when modal opens and wallet is available
+  useEffect(() => {
+    async function fetchWalletAndBalances () {
+      setWeb3Error(null)
+      setBalances([])
+      setWalletAddress(null)
+      if (!modalOpen) return
+      if (!window.ethereum) {
+        setWeb3Error(
+          'No wallet detected. Please install Trust Wallet, MetaMask or use WalletConnect.'
+        )
+        return
+      }
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        const userAddress = await signer.getAddress()
+        setWalletAddress(userAddress)
+        const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+        // Check current chain
+        const currentChainId = (await provider.getNetwork()).chainId
+        if (Number(currentChainId) !== chain.id) {
+          try {
+            const chainIdHex = '0x' + chain.id.toString(16)
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: chainIdHex }]
+            })
+          } catch (switchError) {
+            setWeb3Error('Please switch to the correct network in your wallet.')
+            return
+          }
+        }
+        // Native balance
+        const nativeBalance = await provider.getBalance(userAddress)
+        const balancesArr = [
+          {
+            name: chain.native.symbol,
+            balance: ethers.formatUnits(nativeBalance, chain.native.decimals),
+            isNative: true,
+            address: null,
+            decimals: chain.native.decimals
+          }
+        ]
+        // Tokens
+        for (let token of chain.tokens) {
+          if (!token.address) continue
+          const contract = new ethers.Contract(
+            token.address,
+            ERC20_ABI,
+            provider
+          )
+          let balance = await contract.balanceOf(userAddress)
+          let decimals = token.decimals
+          try {
+            decimals = await contract.decimals()
+          } catch {}
+          balancesArr.push({
+            name: token.name,
+            balance: ethers.formatUnits(balance, decimals),
+            isNative: false,
+            address: token.address,
+            decimals
+          })
+        }
+        setBalances(balancesArr)
+      } catch (err) {
+        setWeb3Error(err.message || 'Could not fetch wallet info.')
+      }
+    }
+    fetchWalletAndBalances()
+    // eslint-disable-next-line
+  }, [modalOpen, selectedChainId])
+
+  // Handle sending tokens/coins
+  const handleSend = async e => {
+    e.preventDefault()
+    setWeb3Error(null)
+    setTxHash(null)
+    setIsLoading(true)
+    try {
+      if (!window.ethereum) {
+        setWeb3Error(
+          'No wallet detected. Please install Trust Wallet or MetaMask.'
+        )
+        setIsLoading(false)
+        return
+      }
+      // connect wallet
+      await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const provider = new ethers.BrowserProvider(window.ethereum)
+      const signer = await provider.getSigner()
+      const userAddress = await signer.getAddress()
+      setWalletAddress(userAddress)
+      const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+      const token = balances[selectedTokenIdx]
+      if (!ethers.isAddress(recipient)) {
+        setWeb3Error('Recipient address is invalid.')
+        setIsLoading(false)
+        return
+      }
+      if (isNaN(Number(amount)) || Number(amount) <= 0) {
+        setWeb3Error('Amount must be greater than zero.')
+        setIsLoading(false)
+        return
+      }
+      if (Number(amount) > Number(token.balance)) {
+        setWeb3Error('Insufficient balance.')
+        setIsLoading(false)
+        return
+      }
+      let tx
+      if (token.isNative) {
+        tx = await signer.sendTransaction({
+          to: recipient,
+          value: ethers.parseUnits(amount, token.decimals)
+        })
+      } else {
+        const contract = new ethers.Contract(token.address, ERC20_ABI, signer)
+        let decimals = token.decimals
+        try {
+          decimals = await contract.decimals()
+        } catch {}
+        tx = await contract.transfer(
+          recipient,
+          ethers.parseUnits(amount, decimals)
+        )
+      }
+      setTxHash(tx.hash)
+      setModalOpen(false)
+      setRecipient('')
+      setAmount('')
+    } catch (err) {
+      if (err.code === 4001) {
+        setWeb3Error('Transaction rejected by user.')
+      } else {
+        setWeb3Error(err.message || 'Transaction failed')
+      }
+    }
+    setIsLoading(false)
+  }
 
   const handleLogout = e => {
     e.preventDefault()
@@ -299,6 +359,9 @@ export default function MainHeader () {
     setDrawerOpen(false)
     navigate('/')
   }
+
+  const chain = CHAINS.find(c => c.id === Number(selectedChainId))
+  const explorerBase = chain?.explorer || 'https://etherscan.io/tx/'
 
   return (
     <div>
@@ -325,7 +388,6 @@ export default function MainHeader () {
           >
             <FaExpand />
           </button>
-
           <button
             className='icon-btn'
             aria-label='Menu'
@@ -375,6 +437,11 @@ export default function MainHeader () {
               ×
             </button>
             <h2>Send Tokens</h2>
+            {walletAddress && (
+              <div style={{ color: '#333', marginBottom: 10, fontSize: 13 }}>
+                Connected: {walletAddress}
+              </div>
+            )}
             <form onSubmit={handleSend}>
               <label>
                 Network
@@ -398,11 +465,21 @@ export default function MainHeader () {
                   value={selectedTokenIdx}
                   onChange={e => setSelectedTokenIdx(Number(e.target.value))}
                 >
-                  {chain.tokens.map((tok, idx) => (
-                    <option key={tok.name} value={idx}>
-                      {tok.name}
-                    </option>
-                  ))}
+                  {balances.length > 0
+                    ? balances.map((tok, idx) => (
+                        <option key={tok.name} value={idx}>
+                          {tok.name} (Bal:{' '}
+                          {Number(tok.balance).toLocaleString(undefined, {
+                            maximumFractionDigits: 6
+                          })}
+                          )
+                        </option>
+                      ))
+                    : chain.tokens.map((tok, idx) => (
+                        <option key={tok.name} value={idx}>
+                          {tok.name}
+                        </option>
+                      ))}
                 </select>
               </label>
               <label>
@@ -413,6 +490,7 @@ export default function MainHeader () {
                   value={recipient}
                   placeholder='0x...'
                   onChange={e => setRecipient(e.target.value)}
+                  autoComplete='off'
                 />
               </label>
               <label>
@@ -424,6 +502,7 @@ export default function MainHeader () {
                   step='any'
                   value={amount}
                   onChange={e => setAmount(e.target.value)}
+                  autoComplete='off'
                 />
               </label>
               <button
@@ -437,16 +516,26 @@ export default function MainHeader () {
             {web3Error && (
               <div style={{ color: 'red', marginTop: 12 }}>{web3Error}</div>
             )}
+            {balances.length > 0 && (
+              <div style={{ marginTop: 12, fontSize: 12 }}>
+                <b>Your Balances:</b>
+                <ul>
+                  {balances.map((tok, i) => (
+                    <li key={tok.name}>
+                      {tok.name}:{' '}
+                      {Number(tok.balance).toLocaleString(undefined, {
+                        maximumFractionDigits: 6
+                      })}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Show wallet connection status */}
-      {walletAddress && (
-        <div style={{ color: 'green', marginLeft: 20 }}>
-          Connected: {walletAddress}
-        </div>
-      )}
+      {/* Show transaction status */}
       {txHash && (
         <div style={{ color: 'blue', marginLeft: 20 }}>
           Transaction sent:{' '}
