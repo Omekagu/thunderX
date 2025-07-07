@@ -17,7 +17,7 @@ import {
 } from 'react-icons/fa'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { Web3Modal } from 'web3modal'
+import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 // Supported chains and popular tokens (expand as needed)
