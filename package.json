@@ -11,6 +11,8 @@
     "@mui/system": "^5.17.1",
     "@mui/x-charts": "^8.5.0",
     "@mui/x-data-grid": "^5.17.26",
+    "@safe-global/safe-apps-provider": "^0.16.0",
+    "@safe-global/safe-apps-sdk": "^7.11.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
