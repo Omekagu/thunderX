@@ -21,5 +21,11 @@ module.exports = function override (config) {
       process: 'process/browser.js'
     })
   ])
+  config.ignoreWarnings = [
+    {
+      message: /Failed to parse source map/
+    }
+  ]
+
   return config
 }
