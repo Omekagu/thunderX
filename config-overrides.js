@@ -15,12 +15,15 @@ module.exports = function override (config) {
     buffer: require.resolve('buffer/'),
     process: require.resolve('process/browser.js')
   }
+
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser.js'
     })
   ])
+
+  // Optional: Mute source map warnings globally
   config.ignoreWarnings = [
     {
       message: /Failed to parse source map/
